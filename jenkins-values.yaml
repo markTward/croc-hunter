@@ -3,9 +3,11 @@
 # helm --namespace jenkins --name jenkins -f ./jenkins-values.yaml install stable/jenkins
 
 Master:
-  Memory: "512Mi"
-  HostName: jenkins.acs.az.estrado.io
-  ServiceType: ClusterIP
+#  Memory: "512Mi"
+  AdminPassword: bemyguest
+  HostName: jenkins.cluster.local
+  ServiceType: NodePort
+  NodePort: 30303
   InstallPlugins:
       - kubernetes:0.11 
       - workflow-aggregator:2.5
@@ -21,15 +23,15 @@ Master:
     - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods leftShift java.util.Map java.util.Map"
     - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods split java.lang.String"
 
-  Ingress:
-    Annotations:
-      kubernetes.io/ingress.class: nginx
-      kubernetes.io/tls-acme: "true"
-
-    TLS:
-      - secretName: jenkins.acs.az.estrado.io
-        hosts:
-          - jenkins.acs.az.estrado.io
+#  Ingress:
+#    Annotations:
+#      kubernetes.io/ingress.class: nginx
+#      kubernetes.io/tls-acme: "true"
+#
+#    TLS:
+#      - secretName: jenkins.cluster.local
+#        hosts:
+#          - jenkins.cluster.local
 
 Agent:
   Enabled: false
